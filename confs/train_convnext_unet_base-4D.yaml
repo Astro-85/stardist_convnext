@@ -1,0 +1,92 @@
+# See <Config3D: class> at src.config.py for a description of the parameters
+
+name                           : 'convnext_unet_base-4D'
+random_seed                    : 42
+
+log_dir                        : './experiments/logs'
+checkpoints_dir                : './experiments/model_checkpoints'
+result_dir                     : './experiments/results'
+
+# ========================= dataset ==================================
+# Using BlastoSpim 1.0
+data_root                      : '/mnt/ceph/users/alu10/datasets/256x256x256_Registered_Iso_Blastospim1-Trilinear_Image'
+train_split                    : '/mnt/home/alu10/ceph/codebases/stardist_convnext/annotations/train_split_4D.csv'
+val_split                      : '/mnt/home/alu10/ceph/codebases/stardist_convnext/annotations/val_split_4D.csv'
+
+dataset_class                  : 'StarDistData4D'
+
+image_ndim                     : 3 # Loading 3D images across 3 timepoints
+n_rays                         : 96
+n_classes                      : null # non None value (multiclass) not supported yet
+patch_size                     : [256, 256, 256]
+
+batch_size                     : 1
+num_workers                    : 4
+
+preprocess                     : 'flip_rotate_zrotate_noise_randintensity'
+preprocess_val                 : 'none'
+intensity_factor_range         : [0.6, 2.]
+intensity_bias_range           : [-0.2, 0.2]
+scale_limit                    : [1., 1.1]
+#======================================================================
+
+
+# ========================= Training ==================================
+use_gpu                        : True # Must be set to True
+use_amp                        : True
+isTrain                        : True
+evaluate                       : True
+
+load_epoch                     : null
+n_epochs                       : 200
+max_steps_per_epoch            : 1000000
+
+lambda_prob                    : 1.
+lambda_dist                    : 0.1
+lambda_reg                     : 0.0001
+lambda_prob_class              : 1.
+
+save_epoch_freq                : 5
+start_saving_best_after_epoch  : 0
+#======================================================================
+
+
+# ===================== Networks configurations =======================
+n_dim                          : 4
+n_channel_in                   : 1
+grid                           : [1, 4, 4, 4] # Initial dowensampling factor for encoder
+anisotropy                     : [1, 1, 1] # Anisotropy of single image
+
+convnext_encoder_downsample    : [1, 2, 2, 2] # Downsampling kernel size and stride (DON'T TOUCH)
+convnext_encoder_depths        : [3, 3, 9, 3] # Number of conv layers in each encoder block
+convnext_encoder_channels      : [64, 128, 256, 512] # Output channels of each encoder block
+convnext_encoder_kernel_size   : [3, 7, 7, 7] # Kernel size of each encoder block (DON'T TOUCH)
+convnext_encoder_stride        : [1, 1, 1, 1] # Stride of each encoder block (DON'T TOUCH)
+convnext_encoder_padding       : [1, 3, 3, 3] # Padding of each encoder block (DON'T TOUCH)
+
+convnext_decoder_upsample      : [1, 2, 2, 2] # Upsampling size (DON'T TOUCH)
+convnext_decoder_depths        : [1, 1, 1, 1] # Number of conv layers in each decoder block
+convnext_decoder_channels      : [256, 128, 64, 64] # Output channels of each decoder block
+convnext_decoder_kernel_size   : [3, 7, 7, 7] # Kernel size of each decoder block (DON'T TOUCH)
+convnext_decoder_stride        : [1, 1, 1, 1] # Stride of each decoder block (DON'T TOUCH)
+convnext_decoder_padding       : [1, 3, 3, 3] # Padding of each decoder block (DON'T TOUCH)
+
+net_conv_after_unet            : 128 # Number of channels in hidden before final prediction heads
+net_conv_after_unet_kernel_size: [3, 3, 3] # 3D kernel since we only use the target image timepoint
+#======================================================================
+
+
+# ========================= Optimizers ================================
+lr                             : 0.001
+beta1                          :  0.9
+beta2                          :  0.999
+
+lr_policy                      : 'plateau'
+lr_plateau_factor              : 0.5
+lr_plateau_threshold           : 0.0000001
+lr_plateau_patience            : 10
+min_lr                         : 0.000001
+
+lr_linear_n_epochs             : 50
+lr_decay_iters                 : 50
+T_max                          : 2

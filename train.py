@@ -56,6 +56,10 @@ def run(args):
     
     # Model instanciation
     model = StarDist(opt).to(local_rank)
+
+    # TEMP JUST FOR 4D CHANNELS
+    model.net.load_state_dict(torch.load('/mnt/home/alu10/ceph/codebases/stardist_convnext/model_checkpoints/convnext_unet_base-4D_channels-starting.pth', map_location=model.device))
+   
     model.net = torch.nn.parallel.DistributedDataParallel(model.net, device_ids=[local_rank])
     
     # Loading data

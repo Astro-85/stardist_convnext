@@ -106,7 +106,8 @@ class StarDistBase(nn.Module):
             if torch.isnan(tensor).any():
                 nan_found = True
                 if self.global_rank == 0:  # Only log from rank 0 to avoid duplicate messages
-                    warnings.warn(f"NaN detected in {name}. Value: {tensor.item() if tensor.numel() == 1 else 'tensor with NaN values'}")
+                    print(f"NaN detected in {name}")
+                    #warnings.warn(f"NaN detected in {name}. Value: {tensor.item() if tensor.numel() == 1 else 'tensor with NaN values'}")
         return nan_found
 
 
@@ -158,7 +159,7 @@ class StarDistBase(nn.Module):
 
         if nan_detected:
             if self.global_rank == 0:
-                warnings.warn(f"NaN detected at epoch {epoch}")
+                warnings.warn(f"NaN detected at epoch {epoch+1}")
             return 0.0, 0.0, 0.0, 0.0
 
         torch.distributed.all_reduce(loss, op=torch.distributed.ReduceOp.AVG)
@@ -221,7 +222,7 @@ class StarDistBase(nn.Module):
         # Skip optimization step if NaN detected
         if nan_detected:
             if self.global_rank == 0:
-                warnings.warn(f"NaN detected at epoch {epoch}")
+                warnings.warn(f"NaN detected at epoch {epoch+1}")
             return 0.0, 0.0, 0.0, 0.0
 
         # Mixed Precision ======================
@@ -533,7 +534,7 @@ class StarDistBase(nn.Module):
                     print("*** amp_scaler not in checkpoint. Initialize a new amp_scaler !!!")
                     print("Optimizers and schedulers loaded.")
             else:
-                print(f"opt.reset_optimizers={opt.reset_optimizers}. Optimizers and Schedulers don't loaded.")
+                print(f"opt.reset_optimizers={opt.reset_optimizers}. Optimizers and Schedulers aren't loaded.")
 
             self.logger.load_pickle(Path(opt.log_dir) / f"{opt.name}/metrics_logs.pkl", epoch=self.opt.epoch_count)
             print("Logger loaded.")

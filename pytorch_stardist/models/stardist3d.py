@@ -25,7 +25,7 @@ class StarDist3D(StarDistBase):
         #raise NotImplementedError('Need to implement predict_big')
 
         ### CHECK THIS
-        grid = self.opt.grid #self.opt.resnet_n_downs
+        grid = self.opt.grid
 
         assert (image.ndim - 1) == len( grid ), (image.shape, grid)
 

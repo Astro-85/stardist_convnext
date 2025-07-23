@@ -1,3 +1,5 @@
+# Built on top of https://github.com/pvjosue/pytorch_convNd
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F

@@ -3,15 +3,15 @@
 name                           : 'convnext_unet_base-4D_channels'
 random_seed                    : 42
 
-log_dir                        : './experiments/logs'
-checkpoints_dir                : './experiments/model_checkpoints'
-result_dir                     : './experiments/results'
+log_dir                        : '/mnt/home/alu10/ceph/codebases/stardist_convnext/experiments/logs'
+checkpoints_dir                : '/mnt/home/alu10/ceph/codebases/stardist_convnext/experiments/model_checkpoints'
+result_dir                     : '/mnt/home/alu10/ceph/codebases/stardist_convnext/experiments/results'
 
 # ========================= dataset ==================================
 # Using BlastoSpim 1.0
 data_root                      : '/mnt/ceph/users/alu10/datasets/256x256x256_Registered_Iso_Blastospim1-Trilinear_Image'
-train_split                    : '/mnt/home/alu10/ceph/codebases/stardist_convnext/annotations/train_split_4D.csv'
-val_split                      : '/mnt/home/alu10/ceph/codebases/stardist_convnext/annotations/val_split_4D.csv'
+train_split                    : '/mnt/home/alu10/ceph/codebases/stardist_convnext/annotations/train_split_4D-filtered.csv'
+val_split                      : '/mnt/home/alu10/ceph/codebases/stardist_convnext/annotations/val_split_4D-filtered.csv'
 
 dataset_class                  : 'StarDistData4DChannels'
 
@@ -20,8 +20,8 @@ n_rays                         : 96
 n_classes                      : null # non None value (multiclass) not supported yet
 patch_size                     : [256, 256, 256]
 
-batch_size                     : 4
-num_workers                    : 8
+batch_size                     : 2
+num_workers                    : 4
 
 preprocess                     : 'flip_rotate_zrotate_noise_randintensity'
 preprocess_val                 : 'none'
@@ -77,7 +77,7 @@ net_conv_after_unet_kernel_size: [3, 3, 3] # 3D kernel since we only use the tar
 
 
 # ========================= Optimizers ================================
-lr                             : 0.001
+lr                             : 0.0001
 beta1                          :  0.9
 beta2                          :  0.999
 

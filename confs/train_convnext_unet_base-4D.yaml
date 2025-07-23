@@ -3,9 +3,9 @@
 name                           : 'convnext_unet_base-4D'
 random_seed                    : 42
 
-log_dir                        : './experiments/logs'
-checkpoints_dir                : './experiments/model_checkpoints'
-result_dir                     : './experiments/results'
+log_dir                        : '/mnt/home/alu10/ceph/codebases/stardist_convnext/experiments/logs'
+checkpoints_dir                : '/mnt/home/alu10/ceph/codebases/stardist_convnext/experiments/model_checkpoints'
+result_dir                     : '/mnt/home/alu10/ceph/codebases/stardist_convnext/experiments/results'
 
 # ========================= dataset ==================================
 # Using BlastoSpim 1.0

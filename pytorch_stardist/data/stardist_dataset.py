@@ -242,8 +242,6 @@ class StarDistDataBase(Dataset):
             raise NotImplementedError('Multiclass support not implemented yet')
 
         image_path, mask_path = self.get_image_mask_paths(idx)
-
-        image = np.clip(image, 1e-8, 1)
         
         item = dict()
         item['image_path'] = image_path.stem if isinstance(image_path, Path) else image_path

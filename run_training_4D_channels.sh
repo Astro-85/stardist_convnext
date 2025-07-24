@@ -5,9 +5,9 @@ module load modules/2.3
 module load python 
 module load cuda cudnn nccl
 
-source ~/envs/stardist/bin/activate
+source /mnt/home/alu10/envs/stardist/bin/activate
 
-# Slurm command: sbatch -p gpu --nodes=1 --gpus=4 -C a100-40gb --cpus-per-gpu=8 run_training_4D_channels.sh
+# Slurm command: sbatch -p gpu --nodes=1 --gpus=4 -C a100-80gb --cpus-per-gpu=8 run_training_4D_channels.sh
 
 python -u `which torchrun` \
     --standalone \

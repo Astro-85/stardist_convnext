@@ -85,10 +85,10 @@ def train(model: StarDistBase, train_dataloader, val_dataloader):
                             opt.n_epochs,
                             i + 1,
                             n_batches_val,
-                            logger.get_mean_value("loss", epoch) or 0.0,
-                            logger.get_mean_value("loss_dist", epoch) or 0.0,
-                            logger.get_mean_value("loss_prob", epoch) or 0.0,
-                            logger.get_mean_value("loss_prob_class", epoch) or 0.0,
+                            logger.get_mean_value("Val_loss", epoch) or 0.0,
+                            logger.get_mean_value("Val_loss_dist", epoch) or 0.0,
+                            logger.get_mean_value("Val_loss_prob", epoch) or 0.0,
+                            logger.get_mean_value("Val_loss_prob_class", epoch) or 0.0,
                             time_spent
                         )
                     )

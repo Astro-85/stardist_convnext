@@ -10,8 +10,8 @@ result_dir                     : '/mnt/home/alu10/ceph/codebases/stardist_convne
 # ========================= dataset ==================================
 # Using BlastoSpim 1.0
 data_root                      : '/mnt/ceph/users/alu10/datasets/256x256x256_Registered_Iso_Blastospim1-Trilinear_Image'
-train_split                    : '/mnt/home/alu10/ceph/codebases/stardist_convnext/annotations/train_split_3D-filtered.csv'
-val_split                      : '/mnt/home/alu10/ceph/codebases/stardist_convnext/annotations/val_split_3D-filtered.csv'
+train_split                    : '/mnt/home/alu10/ceph/codebases/stardist_convnext/annotations/train_split_3D.csv'
+val_split                      : '/mnt/home/alu10/ceph/codebases/stardist_convnext/annotations/val_split_3D.csv'
 
 dataset_class                  : 'StarDistData3D'
 
@@ -20,8 +20,8 @@ n_rays                         : 96
 n_classes                      : null # non None value (multiclass) not supported yet
 patch_size                     : [256, 256, 256]
 
-batch_size                     : 2
-num_workers                    : 4
+batch_size                     : 4
+num_workers                    : 8
 
 preprocess                     : 'flip_rotate_zrotate_noise_randintensity'
 preprocess_val                 : 'none'
